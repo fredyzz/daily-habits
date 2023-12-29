@@ -1,12 +1,31 @@
 import { Habit } from "../domain/Habit";
 import { HabitRepository } from "../domain/HabitRepository";
 
-const HABITS_STORAGE_KEY = "habits"
+const HABITS_STORAGE_KEY = "habits";
 
-export function createLocalStorageHabitRepository() : HabitRepository {
-    return {
-        save
-    }
+export function createLocalStorageHabitRepository(): HabitRepository {
+	return {
+		get,
+		getAll,
+		save,
+	};
+}
+
+async function get(id: string) {
+	const habits = getAllFromLocalStorage();
+	const habit = habits.get(id);
+
+	if (!habit) {
+		return Promise.resolve(null);
+	}
+
+	return Promise.resolve(habit);
+}
+
+async function getAll() {
+	const habits = getAllFromLocalStorage();
+
+	return Promise.resolve(Array.from(habits.values()));
 }
 
 function save(habit: Habit) {
