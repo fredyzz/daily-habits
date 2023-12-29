@@ -1,5 +1,7 @@
 import { Habit } from "./Habit";
 
 export interface HabitRepository {
-    save: (habit: Habit) => void;
+	get: (id: string) => Promise<Habit | null>;
+	getAll: () => Promise<Habit[]>;
+	save: (habit: Habit) => void;
 }
